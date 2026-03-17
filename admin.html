@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATA KHÁCH HÀNG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg-body: #f1f5f9;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* HEADER SECTION */
+        .header-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .header-panel h1 { font-size: 1.5rem; margin: 0; font-weight: 700; color: var(--primary); }
+        .stats-badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 99px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .btn-logout {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        .btn-logout:hover { background: #fee2e2; color: var(--danger); }
+
+        /* TABLE STYLES */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th {
+            background: #f8fafc;
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td { padding: 1rem 1.5rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        tr:hover { background-color: #f8fafc; }
+
+        .customer-name { font-weight: 600; display: block; }
+        .customer-phone { color: var(--primary); text-decoration: none; font-size: 0.875rem; }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge-pickleball { background: #eff6ff; color: #1d4ed8; }
+        .badge-bida { background: #faf5ff; color: #7e22ce; }
+
+        /* ACTIONS */
+        .actions-group { display: flex; gap: 8px; justify-content: center; }
+        .btn-icon {
+            border: none;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .btn-edit { background: #fef3c7; color: #d97706; }
+        .btn-edit:hover { background: #fde68a; }
+        .btn-delete { background: #fee2e2; color: #dc2626; }
+        .btn-delete:hover { background: #fecaca; }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+        .modal-header { margin-bottom: 1.5rem; }
+        .modal-header h2 { margin: 0; font-size: 1.25rem; }
+        
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 2rem; }
+        .btn { padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; }
+        .btn-save { background: var(--primary); color: white; }
+        .btn-cancel { background: #e2e8f0; color: var(--text-main); }
+
+        #admin-section { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="admin-section" class="container">
+        <div class="header-panel">
+            <div>
+                <h1>DATA KHÁCH HÀNG</h1>
+                <div id="count-text" class="stats-badge">Đang tải...</div>
+            </div>
+            <a class="btn-logout" id="btn-logout">Đăng xuất</a>
+        </div>
+
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ngày đăng ký</th>
+                        <th>Dịch vụ</th>
+                        <th>Khách hàng</th>
+                        <th>Địa chỉ</th>
+                        <th>Quy mô</th>
+                        <th style="text-align: center;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chỉnh sửa thông tin khách hàng</h2>
+            </div>
+            <input type="hidden" id="edit-id">
+            <div class="form-group">
+                <label>Tên khách hàng</label>
+                <input type="text" id="edit-name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="text" id="edit-phone" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Dịch vụ</label>
+                <select id="edit-sport" class="form-control">
+                    <option value="Pickleball">Pickleball</option>
+                    <option value="Bida">Bida</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ</label>
+                <input type="text" id="edit-address" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Quy mô</label>
+                <input type="text" id="edit-scale" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeModal()">Hủy</button>
+                <button class="btn btn-save" onclick="saveEdit()">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDLXIdiehtoCfRKH9qQYU2u5IoRDk7KmxM",
+            authDomain: "quanlykhachhangvar.firebaseapp.com",
+            databaseURL: "https://quanlykhachhangvar-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "quanlykhachhangvar",
+            storageBucket: "quanlykhachhangvar.firebasestorage.app",
+            messagingSenderId: "445137801788",
+            appId: "1:445137801788:web:a5007ec21d3c8671eba939",
+            measurementId: "G-WHYLW6WR6V"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // --- AUTH CHECK ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('admin-section').style.display = 'block';
+                loadData();
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        document.getElementById('btn-logout').onclick = () => {
+            signOut(auth).then(() => { window.location.href = 'login.html'; });
+        };
+
+        // --- LOAD DATA ---
+        function loadData() {
+            const dbRef = ref(database, 'registrations');
+            onValue(dbRef, (snapshot) => {
+                const tableBody = document.getElementById('data-table');
+                const countText = document.getElementById('count-text');
+                tableBody.innerHTML = "";
+                const data = snapshot.val();
+                
+                if(data) {
+                    const entries = Object.entries(data).reverse();
+                    countText.innerText = `Tổng số: ${entries.length} khách hàng`;
+
+                    entries.forEach(([id, val]) => {
+                        const row = `
+                            <tr>
+                                <td><span style="font-size:0.75rem; color:var(--text-muted)">${val.timestamp || ''}</span></td>
+                                <td><span class="badge badge-${val.sport?.toLowerCase()}">${val.sport}</span></td>
+                                <td>
+                                    <span class="customer-name">${val.name}</span>
+                                    <a href="tel:${val.phone}" class="customer-phone">${val.phone}</a>
+                                </td>
+                                <td><span style="font-size:0.875rem">${val.address}</span></td>
+                                <td><span style="font-size:0.875rem">${val.scale}</span></td>
+                                <td class="actions-group">
+                                    <button class="btn-icon btn-edit" onclick="openEditModal('${id}', ${JSON.stringify(val).replace(/"/g, '&quot;')})">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                    </button>
+                                    <button class="btn-icon btn-delete" onclick="deleteEntry('${id}')">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        tableBody.innerHTML += row;
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 4rem; color:var(--text-muted)">Chưa có dữ liệu khách hàng</td></tr>';
+                }
+            });
+        }
+
+        // --- DELETE ---
+        window.deleteEntry = (id) => {
+            if(confirm("Bạn có chắc chắn muốn xóa khách hàng này?")) {
+                remove(ref(database, 'registrations/' + id));
+            }
+        };
+
+        // --- EDIT LOGIC ---
+        window.openEditModal = (id, data) => {
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-name').value = data.name;
+            document.getElementById('edit-phone').value = data.phone;
+            document.getElementById('edit-sport').value = data.sport;
+            document.getElementById('edit-address').value = data.address;
+            document.getElementById('edit-scale').value = data.scale;
+            document.getElementById('editModal').style.display = 'block';
+        };
+
+        window.closeModal = () => {
+            document.getElementById('editModal').style.display = 'none';
+        };
+
+        window.saveEdit = () => {
+            const id = document.getElementById('edit-id').value;
+            const updatedData = {
+                name: document.getElementById('edit-name').value,
+                phone: document.getElementById('edit-phone').value,
+                sport: document.getElementById('edit-sport').value,
+                address: document.getElementById('edit-address').value,
+                scale: document.getElementById('edit-scale').value,
+                // Giữ nguyên timestamp cũ
+            };
+
+            update(ref(database, 'registrations/' + id), updatedData)
+                .then(() => {
+                    alert("Cập nhật thành công!");
+                    closeModal();
+                })
+                .catch((error) => alert("Lỗi: " + error.message));
+        };
+
+        // Đóng modal khi click ra ngoài
+        window.onclick = function(event) {
+            let modal = document.getElementById('editModal');
+            if (event.target == modal) closeModal();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,486 @@
+/* ========================================
+   VarSport Landing Page - Styles
+   ======================================== */
+
+/* --- CSS Reset & Base --- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-bg-dark: #111118;
+    --color-bg-header: #222222;
+    --color-primary-blue: #1e3a6e;
+    --color-accent-green: #4CAF50;
+    --color-accent-yellow: #FFC107;
+    --color-accent-blue: #2563EB;
+    --color-white: #ffffff;
+    --color-text-light: #e0e0e0;
+    --color-text-muted: #aaaaaa;
+    --font-primary: 'Inter', sans-serif;
+    --font-display: 'Inter', sans-serif;
+    --max-width: 1200px;
+    --transition: all 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-bg-dark);
+    color: var(--color-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* --- Animations --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* --- HEADER --- */
+.header {
+    background-color: var(--color-bg-dark);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    animation: slideDown 0.5s ease;
+}
+
+.header .container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logo {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.logo-img {
+    height: 36px;
+    width: auto;
+}
+
+.footer-logo-img {
+    height: 50px;
+    width: auto;
+}
+
+.homestech-logo-img {
+    height: 50px;
+    width: auto;
+}
+
+/* --- HERO SECTION (Banner ảnh) --- */
+.hero {
+    width: 100%;
+    line-height: 0;
+    background-color: var(--color-bg-dark);
+}
+
+.banner {
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    height: auto;
+    display: block;
+}
+
+
+/* --- REGISTRATION SECTION --- */
+.registration {
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://cameradalat.com/wp-content/uploads/2026/03/banner-web-var-1.1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 60px 24px;
+}
+
+
+.registration-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.registration-card {
+    background: #2064ED;
+    border-radius: 16px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    animation: fadeInUp 0.7s ease 0.3s forwards;
+}
+
+.registration-title {
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-white);
+    margin-bottom: 28px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.form-select {
+    flex: 3;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.form-select:invalid {
+    color: #8a9ab5;
+    font-style: italic;
+}
+
+.form-row #input-name {
+    flex: 7;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    color: #333;
+    background: #FAF6EA;
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: #8a9ab5;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.form-input:focus {
+    border-color: var(--color-accent-blue);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.btn-submit {
+    display: block;
+    width: auto;
+    margin: 24px auto 0;
+    padding: 14px 48px;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 24px;
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-submit:hover {
+    background-color: #f0f0f0;
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* --- FOOTER --- */
+.footer {
+    background-color: #0a0a12;
+    padding: 48px 0 36px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+}
+
+.footer-logos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 180px;
+}
+
+.footer-logo {
+    transition: var(--transition);
+}
+
+.footer-logo:hover {
+    opacity: 0.8;
+}
+
+.footer-info {
+    display: flex;
+    gap: 40px;
+    flex: 1;
+    flex-wrap: wrap;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    padding-left: 48px;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 220px;
+    opacity: 0;
+}
+
+.footer-col:last-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    padding-left: 40px;
+}
+
+.footer-col.animate-in {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.footer-col p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.footer-col p strong {
+    color: var(--color-text-light);
+    font-weight: 600;
+}
+
+.footer-col a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-col a:hover {
+    color: #2064ED;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.contact-icon {
+    flex-shrink: 0;
+}
+
+/* --- TOAST NOTIFICATION --- */
+.toast-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(30, 58, 110, 0.95);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.toast-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet - 768px */
+@media (max-width: 768px) {
+    .registration-card {
+        padding: 32px 24px;
+        max-width: 380px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .footer-info {
+        gap: 28px;
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .footer-col:last-child {
+        border-left: none;
+        padding-left: 0;
+    }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+    .header {
+        padding: 10px 0;
+    }
+
+    .registration {
+        padding: 40px 16px;
+    }
+
+    .registration-card {
+        padding: 28px 20px;
+        border-radius: 12px;
+    }
+
+    .registration-title {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .form-input {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+    }
+
+    .btn-submit {
+        padding: 12px 36px;
+        font-size: 0.85rem;
+    }
+
+    .footer {
+        padding: 32px 0 24px;
+    }
+
+    .footer-logos {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        width: 100%;
+    }
+
+    .footer-logo-img,
+    .homestech-logo-img {
+        height: 36px;
+    }
+
+    .homestech-logo-img {
+        transform: translateY(6px);
+    }
+
+    .footer-info {
+        flex-direction: column;
+        gap: 0px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 24px;
+        margin-top: 12px;
+    }
+
+    .footer-col {
+        min-width: auto;
+    }
+
+    .footer-col p {
+        font-size: 0.8rem;
+    }
+}
