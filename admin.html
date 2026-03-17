@@ -158,6 +158,12 @@
         #admin-section { display: none; }
     </style>
 </head>
+    <script>
+    // Kiểm tra nếu là thiết bị di động (độ rộng màn hình nhỏ hơn 768px)
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768) {
+        window.location.href = "admobile.html";
+    }
+</script>
 <body>
 
     <div id="admin-section" class="container">
